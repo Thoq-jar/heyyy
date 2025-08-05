@@ -5,7 +5,7 @@ use std::time::{Duration, Instant};
 use tokio::sync::Semaphore;
 
 #[derive(Parser)]
-#[command(name = "heyy")]
+#[command(name = "heyyy")]
 #[command(about = "A simple HTTP load tester")]
 struct Args {
     #[arg(short = 'u', long = "url")]
