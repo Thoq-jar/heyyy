@@ -1,7 +1,7 @@
 use clap::Parser;
 use reqwest::Client;
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Instant;
 use tokio::sync::Semaphore;
 
 #[derive(Parser)]
@@ -34,9 +34,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let start_time = Instant::now();
     let mut tasks = Vec::new();
 
-    let delay_between_requests = Duration::from_nanos(1_000_000_000 / args.req_per_sec);
-
-    for i in 0..args.total_requests {
+    for _ in 0..args.total_requests {
         let client = Arc::clone(&client);
         let semaphore = Arc::clone(&semaphore);
         let url = args.url.clone();
@@ -54,10 +52,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         });
 
         tasks.push(task);
-
-        if i < args.total_requests - 1 {
-            tokio::time::sleep(delay_between_requests).await;
-        }
     }
 
     let mut successful_requests = 0;
