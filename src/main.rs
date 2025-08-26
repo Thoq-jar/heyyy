@@ -22,10 +22,11 @@ struct Args {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = <Args as Parser>::parse();
 
-    println!("Starting load test:");
-    println!("URL: {}", args.url);
-    println!("Requests per second: {}", args.req_per_sec);
-    println!("Total requests: {}", args.total_requests);
+    println!("<><><><><><><><><><><><><><><><><><><><><>");
+    println!("+ Starting load test:");
+    println!("  - URL: {}", args.url);
+    println!("  - Req/s: {}", args.req_per_sec);
+    println!("  - Total requests: {}", args.total_requests);
     println!();
 
     let client = Arc::new(Client::new());
@@ -75,18 +76,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let total_time = start_time.elapsed();
     let actual_req_per_sec = args.total_requests as f64 / total_time.as_secs_f64();
 
-    println!("Test completed!");
-    println!("Total time: {:.2} seconds", total_time.as_secs_f64());
-    println!("Successful requests: {}", successful_requests);
-    println!("Failed requests: {}", failed_requests);
-    println!("Requests per second: {:.2}", actual_req_per_sec);
+    println!("<><><><><><><><><><><><><><><><><><><><><>");
+    println!("+ Test completed!");
+    println!("  - Total time: {:.2} seconds", total_time.as_secs_f64());
+    println!("  - Successful requests: {}", successful_requests);
+    println!("  - Failed requests: {}", failed_requests);
+    println!("  - Requests per second: {:.2}", actual_req_per_sec);
 
     if !status_codes.is_empty() {
-        println!("\nStatus code distribution:");
+        println!("\n+ Status code distribution:");
         for (code, count) in status_codes {
-            println!("  {}: {}", code, count);
+            println!("  - {}: {}", code, count);
         }
     }
+
+    println!("<><><><><><><><><><><><><><><><><><><><><>");
 
     Ok(())
 }
